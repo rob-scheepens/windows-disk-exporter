@@ -1,7 +1,11 @@
 use prometheus::{Opts, Registry, Counter, TextEncoder, Encoder};
 use windows::core::*;
-use windows::Win32::System::Performance;
+use windows::Win32::System::Performance::*;
+use winapi::um::pdh::*;
 
 fn main() {
-    println!("Hello, world!");
+    
+    let hQuery: PDH_HQUERY;
+
+    pdhStatus = PdhOpenQueryW(PCWSTR::null(), 0, &hQuery);
 }
