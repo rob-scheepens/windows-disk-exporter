@@ -1,5 +1,3 @@
-extern crate winapi;
-
 use prometheus::{Opts, Registry, Counter, TextEncoder, Encoder};
 use windows::core::*;
 use windows::Win32::System::Performance::PdhOpenQueryW;
@@ -7,7 +5,10 @@ use winapi::um::pdh::*;
 
 fn main() {
     
-    let mut hQuery:isize = 0;
-    
-    let pdhStatus = PdhOpenQueryW(PCWSTR::null(), 0, &mut hQuery);
+    unsafe {
+
+    let mut h_query:isize = 0;
+    let pdh_status = PdhOpenQueryW(PCWSTR::null(), 0, &mut h_query);
+    println!("pdh_status: {}", pdh_status);
+  }
 }
