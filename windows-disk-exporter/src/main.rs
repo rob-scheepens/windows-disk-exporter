@@ -8,7 +8,7 @@ fn main() {
     
     unsafe {
 
-    let mut counter_path:PCWSTR = "Test";
+    let mut counter_path = PCWSTR::from_raw("Test");
 
     let mut h_query:isize = 0;
     let pdh_status = PdhOpenQueryW(PCWSTR::null(), 0, &mut h_query);
