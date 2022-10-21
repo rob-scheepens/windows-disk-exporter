@@ -11,7 +11,7 @@ fn main() {
     let mut h_query:isize = 0;
     let pdh_status = PdhOpenQueryW(PCWSTR::null(), 0, &mut h_query);
 
-    if pdh_status != ERROR_SUCCESS.try_into().unwrap()
+    if pdh_status != ERROR_SUCCESS as i32
 	{
 		println!("pdh_status: {}", pdh_status);
 	}
