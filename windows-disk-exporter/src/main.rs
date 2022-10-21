@@ -17,8 +17,8 @@ fn main() {
 	{
 		println!("pdh_status: {}", pdh_status);
 	}
-
-    let pdh_status = PdhAddCounterW(&mut h_query, &counter_path, 0, h_counter);
+    let mut h_query = winapi::ctypes::c_void.as_ptr();
+    let pdh_status = PdhAddCounterW(&mut h_query, counter_path.as_ptr(), 0, &mut h_counter );
 
     let pdh_status = PdhCollectQueryData(&mut h_query);
 
