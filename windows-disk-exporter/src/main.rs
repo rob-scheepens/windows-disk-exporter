@@ -8,9 +8,9 @@ fn main() {
     
     unsafe {
 
-    let counter_path = String::from("Test");
-    let mut h_query:isize = 0;
-    let mut h_counter:isize = 0;
+    let counter_path = String::from("\\Processor(_Total)\\% Processor Time");
+    let mut h_query = 0;
+    let mut h_counter = 0;
     let pdh_status = PdhOpenQueryW(PCWSTR::null(), 0, &mut h_query);
 
     if pdh_status != ERROR_SUCCESS as i32
@@ -18,7 +18,9 @@ fn main() {
 		println!("pdh_status: {}", pdh_status);
 	}
 
-    let pdh_status = PdhAddCounterW(h_query, counter_path, 0, h_counter);
+    let pdh_status = PdhAddCounterW(&mut h_query, &counter_path, 0, h_counter);
+
+    let pdh_status = PdhCollectQueryData(&mut h_query);
 
     println!("{}",counter_path);
   }
