@@ -8,7 +8,7 @@ fn main() {
     
     unsafe {
 
-    let counter_path = String::from("\\Processor(_Total)\\% Processor Time");
+    let counter_path = PCWSTR::from_raw("\\Processor(_Total)\\% Processor Time".as_ptr() as *const u16);
     let mut h_query = 0;
     let mut h_counter = 0;
     let pdh_status = PdhOpenQueryW(PCWSTR::null(), 0, &mut h_query);
@@ -22,6 +22,6 @@ fn main() {
 
     let pdh_status = PdhCollectQueryData(&mut h_query);
 
-    println!("{}",counter_path);
+    println!("{:?}",counter_path);
   }
 }
