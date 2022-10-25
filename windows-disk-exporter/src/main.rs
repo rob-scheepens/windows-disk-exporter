@@ -8,7 +8,7 @@ use winapi::shared::winerror::*;
 fn main() {
     
     unsafe {
-      let ans = "\\Process(*)\\% Processor Time".as_ptr() as *const u16;
+      let ans = "\\Processor(0)\\% Processor Time".as_ptr() as *const u16;
       let counter_path = PCWSTR::from_raw(ans);
       let mut h_query = 0;
       let h_counter: *mut *mut c_void = 0 as *mut c_void as *mut *mut c_void;
