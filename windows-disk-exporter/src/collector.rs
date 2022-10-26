@@ -1,2 +1,1 @@
-pub fn register_colelctor () {
-}
+// fn register_collector() {}

@@ -1,6 +1,6 @@
 mod collector;
 
-use prometheus_exporter::prometheus::register_counter;
+// use prometheus_exporter::prometheus::register_counter;
 use windows::{core::*, Win32::System::Performance::*};
 
 fn main() {
@@ -13,7 +13,7 @@ fn main() {
     // Notice that the macro is coming from the reexported prometheus crate instead
     // of the original crate. This is important as different versions of the
     // prometheus crate have incompatible global registries.
-    let counter = register_counter!("user_exporter_counter", "help").unwrap();
+    // let counter = register_counter!("user_exporter_counter", "help").unwrap();
     //	counter.inc();
     unsafe {
         // Create Performance Query
