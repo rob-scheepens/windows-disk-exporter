@@ -1,10 +1,15 @@
+mod cli;
 mod collector;
 
+use clap::Parser;
 // use prometheus_exporter::prometheus::register_counter;
+use std::net::IpAddr;
+use std::net::SocketAddr;
 use windows::{core::*, Win32::System::Performance::*};
 
 fn main() {
-    let binding = "127.0.0.1:9184".parse().unwrap();
+    let args = cli::Args::parse();
+    let binding = SocketAddr::new(IpAddr::V4(args.ipaddr), args.port);
     // Will create an exporter and start the http server using the given binding.
     // If the webserver can't bind to the given binding it will fail with an error.
     prometheus_exporter::start(binding).unwrap();
