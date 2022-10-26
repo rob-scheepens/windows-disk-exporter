@@ -9,6 +9,7 @@ edition = "2021"
 widestring = "1.0.2"
 prometheus_exporter = "0.8.5"
 clap = { version = "4.0.18", features = ["derive"] }
+env_logger = "0.9.1"
 
 [dependencies.windows]
 version = "0.42.0"

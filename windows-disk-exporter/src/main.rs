@@ -2,12 +2,17 @@ mod cli;
 mod collector;
 
 use clap::Parser;
-// use prometheus_exporter::prometheus::register_counter;
+use env_logger::{Builder, Env};
+use prometheus_exporter::prometheus::{labels, opts, register_int_counter_with_registry, Registry};
 use std::net::IpAddr;
 use std::net::SocketAddr;
 use windows::{core::*, Win32::System::Performance::*};
 
 fn main() {
+    // Setup logger with default level info so we can see the messages from
+    // prometheus_exporter.
+    Builder::from_env(Env::default().default_filter_or("debug")).init();
+
     let args = cli::Args::parse();
     let binding = SocketAddr::new(IpAddr::V4(args.ipaddr), args.port);
     // Will create an exporter and start the http server using the given binding.
