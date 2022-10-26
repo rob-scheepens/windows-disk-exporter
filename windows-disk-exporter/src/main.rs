@@ -10,7 +10,7 @@ fn main() {
         let mut counter = 0;
         PdhAddCounterW(
             query,
-            w!("\\Processor(0)\\% Processor Time"),
+            w!("\\physicaldisk(1)\\avg. disk sec/write"),
             0,
             &mut counter,
         );
@@ -21,7 +21,7 @@ fn main() {
  
             let mut value = Default::default();
             if 0 == PdhGetFormattedCounterValue(counter, PDH_FMT_DOUBLE, None, &mut value) {
-                println!("{:.2}", value.Anonymous.doubleValue);
+                println!("{:.4}", value.Anonymous.doubleValue * 1000.0);
             }
         }
     }
