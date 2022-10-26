@@ -4,19 +4,18 @@ use prometheus_exporter::prometheus::register_counter;
 use windows::{core::*, Win32::System::Performance::*};
 
 fn main() {
+    let binding = "127.0.0.1:9184".parse().unwrap();
+    // Will create an exporter and start the http server using the given binding.
+    // If the webserver can't bind to the given binding it will fail with an error.
+    prometheus_exporter::start(binding).unwrap();
+
+    // Create a counter using the global prometheus registry and increment it by one.
+    // Notice that the macro is coming from the reexported prometheus crate instead
+    // of the original crate. This is important as different versions of the
+    // prometheus crate have incompatible global registries.
+    let counter = register_counter!("user_exporter_counter", "help").unwrap();
+    //	counter.inc();
     unsafe {
-        let binding = "127.0.0.1:9184".parse().unwrap();
-        // Will create an exporter and start the http server using the given binding.
-        // If the webserver can't bind to the given binding it will fail with an error.
-        prometheus_exporter::start(binding).unwrap();
-
-        // Create a counter using the global prometheus registry and increment it by one.
-        // Notice that the macro is coming from the reexported prometheus crate instead
-        // of the original crate. This is important as different versions of the
-        // prometheus crate have incompatible global registries.
-        let counter = register_counter!("user_exporter_counter", "help").unwrap();
-        //	counter.inc();
-
         // Create Performance Query
         let mut query = 0;
         PdhOpenQueryW(None, 0, &mut query);
@@ -36,7 +35,6 @@ fn main() {
             0,
             &mut disksecread,
         );
-
         loop {
             std::thread::sleep(std::time::Duration::new(1, 0));
             PdhCollectQueryData(query);
