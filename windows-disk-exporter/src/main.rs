@@ -1,9 +1,31 @@
+mod collector;
+
 use prometheus::{Opts, Registry, Counter, TextEncoder, Encoder};
+use prometheus_exporter::*;
 
 use windows::{core::*, Win32::System::Performance::*};
  
 fn main() {
     unsafe {
+
+	use prometheus_exporter::{
+	    self,
+	    prometheus::register_counter,
+	};
+
+	let binding = "127.0.0.1:9184".parse().unwrap();
+	// Will create an exporter and start the http server using the given binding.
+	// If the webserver can't bind to the given binding it will fail with an error.
+	prometheus_exporter::start(binding).unwrap();
+
+	// Create a counter using the global prometheus registry and increment it by one.
+	// Notice that the macro is coming from the reexported prometheus crate instead
+	// of the original crate. This is important as different versions of the
+	// prometheus crate have incompatible global registries.
+	let counter = register_counter!("user_exporter_counter", "help").unwrap();
+//	counter.inc();
+
+	// Create Performance Query
         let mut query = 0;
         PdhOpenQueryW(None, 0, &mut query);
  
