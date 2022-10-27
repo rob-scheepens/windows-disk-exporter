@@ -1,5 +1,4 @@
 mod cli;
-mod collector;
 
 use clap::Parser;
 use env_logger::{Builder, Env};
